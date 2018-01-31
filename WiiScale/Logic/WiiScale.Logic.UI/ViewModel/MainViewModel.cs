@@ -94,9 +94,4 @@ namespace WiiScale.Logic.UI.ViewModel
             AccountSet.Dispose();
         }
     }
-
-    public class WeightsViewModel : BaseViewModel
-    {
-        public SlideNavigator SlideNavigator { get; set; }
-    }
 }

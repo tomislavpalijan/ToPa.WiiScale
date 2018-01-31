@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Shared", ".Shared", "{EF165BDC-340B-4DD6-A64A-46463EF81667}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,6 +16,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiScale.Logic.UI", "Logic\WiiScale.Logic.UI\WiiScale.Logic.UI.csproj", "{10F906FF-21A6-4385-A9E7-DD96F5837B9C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiScale.Desktop.WPF", "UI\WiiScale.Desktop.WPF\WiiScale.Desktop.WPF.csproj", "{DA9A978D-F580-4992-A723-705B93DF885B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{6DBFB81F-D660-4AC2-A77B-F8E456770456}"
+	ProjectSection(SolutionItems) = preProject
+		.shared\WiimoteLib.dll = .shared\WiimoteLib.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +43,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{10F906FF-21A6-4385-A9E7-DD96F5837B9C} = {9ECDA911-A0A7-4FFC-8562-7A7E0D84B75B}
 		{DA9A978D-F580-4992-A723-705B93DF885B} = {34660E20-E21B-479B-A1F9-C00EEEFEB59E}
+		{6DBFB81F-D660-4AC2-A77B-F8E456770456} = {EF165BDC-340B-4DD6-A64A-46463EF81667}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AB95068C-B89C-4DD4-B676-51676F1546BF}
