@@ -1,0 +1,22 @@
+Libraries:
+	Project WiiScale.Logic.UI
+		- MvvmLightLibs
+			PM> install-package MvvmLightLibs
+
+		- PropertyChanged
+			PM> install-package PropertyChanged.Fody
+
+		- WiiMoteLib
+			by Brain Peek http://www.brianpeek.com/
+			Article : http://msdn.microsoft.com/coding4fun/hardware/article.aspx?articleid=1879033
+			
+			
+	Project WiiScale.Desktop.WPF
+		-  MvvmLight
+			PM> install-package MvvmLight
+
+		- MaterialDesignThemes
+			PM> install-package MaterialDesignThemes
+
+		- LiveCharts
+			PM> install-package LiveCharts.Wpf

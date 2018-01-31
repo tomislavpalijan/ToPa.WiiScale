@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using WiiScale.Logic.UI.ViewModel;
 
 namespace WiiScale.Logic.UI
 {
@@ -25,7 +26,7 @@ namespace WiiScale.Logic.UI
 
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+
         }
     }
 }

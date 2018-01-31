@@ -4,9 +4,72 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WiiScale.Desktop.WPF"
-        mc:Ignorable="d" DataContext="{Binding Path=Main, Source={StaticResource Locator}}"
-        Title="{Binding Title }"   Width="525">
-    <Grid>
-        
-    </Grid>
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:model="clr-namespace:WiiScale.Logic.UI.Model;assembly=WiiScale.Logic.UI"
+        xmlns:viewModel="clr-namespace:WiiScale.Logic.UI.ViewModel;assembly=WiiScale.Logic.UI"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        DataContext="{Binding Path=Main, Source={StaticResource Locator}}"
+        mc:Ignorable="d" Closing="MainWindow_OnClosing"
+        d:DesignWidth="800" d:DesignHeight="600">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                <ResourceDictionary 
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type model:AccountSet}">
+                <local:AccountSetView HorizontalAlignment="Center" Width="900" Margin="16"/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:NewAccountViewModel}">
+                <local:NewAccountView Width="250" Margin="16"/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AccountViewModel}">
+                <local:AccountDetailView Width="900" Margin="16"/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <materialDesign:DialogHost>
+        <DockPanel>
+            <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                      Mode="PrimaryDark" DockPanel.Dock="Top">
+                <DockPanel>
+                    <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                             PlacementMode="BottomAndAlignCentres"
+                                             ToolTipService.Placement="Right"
+                                             ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
+                    >
+                        <StackPanel>
+                            <Button ToolTip="New User" Command="{Binding ShowNewAccountCommand}">
+                                <materialDesign:PackIcon Kind="Account"/>
+                            </Button>
+                            <Button ToolTip="Settings">
+                                <materialDesign:PackIcon Kind="Settings"/>
+                            </Button>
+                            <Button ToolTip="Exit"                
+                                    Click="ExitButtonClose" >
+                                <materialDesign:PackIcon Kind="ExitToApp"/>
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding WindowTitle}" VerticalAlignment="Center" FontSize="22" />
+                </DockPanel>
+            </materialDesign:ColorZone>
+            <materialDesign:Transitioner DockPanel.Dock="Bottom"
+                                         AutoApplyTransitionOrigins="True"
+                                         SelectedIndex="{Binding ActiveSlideIndex}"
+                                         ItemsSource="{Binding Accounts}"
+                                         HorizontalAlignment="Stretch"/>
+        </DockPanel>
+    </materialDesign:DialogHost>
 </Window>

@@ -2,7 +2,31 @@
              xmlns:uiLogic="clr-namespace:WiiScale.Logic.UI;assembly=WiiScale.Logic.UI">
   <Application.Resources>
     <ResourceDictionary>
-      <uiLogic:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+        <ResourceDictionary.MergedDictionaries>
+            <!--LIVE CHARTS-->
+            <!-- always required -->
+            <ResourceDictionary
+                Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/base.xaml" />
+            <!-- for material colors -->
+            <ResourceDictionary
+                Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Colors/material.xaml" />
+            <ResourceDictionary
+                Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Size/m.xaml" />
+            <ResourceDictionary
+                Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Weight/normal.xaml" />
+
+
+                <!-- MATERIAL DESIGN THEMES-->
+            <ResourceDictionary
+                Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+            <ResourceDictionary
+                Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            <ResourceDictionary
+                Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+            <ResourceDictionary
+                Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Purple.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+            <uiLogic:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
     </ResourceDictionary>
   </Application.Resources>
 </Application>

@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="WiiScale.Desktop.WPF.AccountSetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WiiScale.Desktop.WPF"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModel="clr-namespace:WiiScale.Logic.UI.ViewModel;assembly=WiiScale.Logic.UI"
+             xmlns:model="clr-namespace:WiiScale.Logic.UI.Model;assembly=WiiScale.Logic.UI"
+             xmlns:navigation="clr-namespace:WiiScale.Logic.UI.Helper.Navigation;assembly=WiiScale.Logic.UI"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModel:MainViewModel, d:IsDesignTimeCreatable=True}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources> 
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary
+                Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary
+                Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                <ResourceDictionary 
+                Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary 
+                Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DatePicker.xaml" />
+                <ResourceDictionary 
+                Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding Accounts}" VerticalAlignment="Top">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type model:Account}">
+                    <materialDesign:TransitioningContent>
+                        <materialDesign:TransitioningContent.OpeningEffects>
+                            <materialDesign:TransitionEffect Kind="SlideInFromRight" Duration="0:0:0.150" />
+                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.150" />
+                        </materialDesign:TransitioningContent.OpeningEffects>
+                        <materialDesign:Card Width="250" Margin="0 0 0 6"
+                                             VerticalAlignment="Stretch"
+                                             TextOptions.TextFormattingMode="Ideal">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition MaxHeight="250"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Person.Firtsname}"
+                                           Style="{StaticResource MaterialDesignDisplay1TextBlock}" Margin="8"
+                                           VerticalAlignment="Center" />
+                                <Image Source="{Binding Person.ImageUrl}" Grid.Column="0" Grid.ColumnSpan="2" Stretch="UniformToFill" Grid.Row="1"/>
+                        
+                                <StackPanel Grid.Column="0" Grid.Row="2" Margin="5 0 0 0">
+                                    <TextBlock Text="Current Weight : "/>
+                                    <TextBlock Text="{Binding CurrentWeight , StringFormat= {}{0} kg, FallbackValue=Current weight ERROR }" FontSize="20"/>
+                                </StackPanel>
+
+                                <Button Grid.Row="2" Grid.Column="1" Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Content="MORE" Command="{x:Static navigation:NavigationCommands.ShowAccountCommand}"
+                                        CommandParameter="{Binding }"
+                                        HorizontalAlignment="Right" Margin="8" />
+                            </Grid>
+                        </materialDesign:Card>
+                    </materialDesign:TransitioningContent>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+</UserControl>

@@ -1,10 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Shared", ".Shared", "{EF165BDC-340B-4DD6-A64A-46463EF81667}"
 	ProjectSection(SolutionItems) = preProject
+		.shared\Info.txt = .shared\Info.txt
 		.shared\SharedAssemblyInfo.cs = .shared\SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject

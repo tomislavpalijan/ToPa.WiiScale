@@ -6,5 +6,4 @@ using System.Runtime.InteropServices;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("WiiScale.Logic.UI")]
-[assembly: AssemblyDescription("Wii Scale Logic" +
-                               "")]
+[assembly: AssemblyDescription("Wii Scale Logic")]

@@ -286,3 +286,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/WiiScale/UI/WiiScale.Desktop.WPF/Assets/Gabriela.PNG
+/WiiScale/UI/WiiScale.Desktop.WPF/Assets/Renata.PNG
+/WiiScale/UI/WiiScale.Desktop.WPF/Assets/Tomi.PNG
