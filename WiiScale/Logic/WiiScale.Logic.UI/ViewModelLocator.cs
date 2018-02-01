@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using WiiScale.Logic.UI.Services.WiiBoard;
 using WiiScale.Logic.UI.ViewModel;
 
 namespace WiiScale.Logic.UI
@@ -18,12 +19,12 @@ namespace WiiScale.Logic.UI
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            SimpleIoc.Default.Register<IWiiBoardService, WiiBoardService>();
             
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
-
         public static void Cleanup()
         {
 

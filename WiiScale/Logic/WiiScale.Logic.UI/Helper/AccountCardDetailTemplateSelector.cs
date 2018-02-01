@@ -1,9 +1,12 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using WiiScale.Logic.UI.Model;
 
 namespace WiiScale.Logic.UI.Helper
 {
+    
+
     public class AccountCardDetailTemplateSelector : DataTemplateSelector
     {
         public DataTemplate ActiveTemplate { get; set; }

@@ -84,6 +84,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Text="Weight Details" FontSize="24" Grid.Row="0" />
                     <Button Style="{DynamicResource MaterialDesignFloatingActionButton}"
@@ -159,7 +160,7 @@
                             </StackPanel>
                         </TextBlock.ToolTip>
                     </TextBlock>
-                    
+                    <TextBox FontSize="24" Grid.Row="6" Text="{Binding CurrentWeight, Mode=OneWay}" />
                    
                 </Grid>
             </Grid>

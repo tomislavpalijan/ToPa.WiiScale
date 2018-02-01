@@ -31,10 +31,10 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
         private float _weightInKgRaw;
         private Wiimote _wiiBalanceBoard;
         private WiiBoardServiceState _wiiBoardServiceState;
-        public Action<float> BatteryStateChangedAction;
-        public Action<float> OffsetChangedAction;
-        public Action<float> WeightInKgChangedAction;
-        public Action<WiiBoardServiceState> WiiBoardServiceStateChangedAction;
+        public event EventHandler<float> BatteryStateChanged;
+        public event EventHandler<float> OffsetChanged;
+        public event EventHandler<float> WeightInKgChanged;
+        public event EventHandler<WiiBoardServiceState> WiiBoardServiceStateChanged;
 
         public WiiBoardService()
         {
@@ -51,7 +51,7 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
             private set
             {
                 _batteryState = value;
-                BatteryStateChangedAction?.Invoke(_batteryState);
+                BatteryStateChanged?.Invoke(this, _batteryState);
             }
         }
 
@@ -63,7 +63,7 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
             private set
             {
                 _wiiBoardServiceState = value;
-                WiiBoardServiceStateChangedAction?.Invoke(_wiiBoardServiceState);
+                WiiBoardServiceStateChanged?.Invoke(this, _wiiBoardServiceState);
             }
         }
 
@@ -81,15 +81,18 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
             private set
             {
                 _weightInKg = value;
-                WeightInKgChangedAction?.Invoke(_weightInKg);
+                WeightInKgChanged?.Invoke(this, _weightInKg);
             }
         }
 
         public void Init(float offset = 0.0f)
         {
             Offset = offset;
-            _aliveTimer = new Timer(3000);
-            _aliveTimer.AutoReset = true;
+            _aliveTimer = new Timer(3000)
+            {
+                AutoReset = true
+            };
+
             _aliveTimer.Elapsed += AliveTimerOnElapsed;
             IsInitialized = true;
             WiiBoardServiceState = WiiBoardServiceState.Discover;
@@ -134,7 +137,7 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
             {
                 WiimoteCollection.FindAllWiimotes();
             }
-            catch (WiimoteException e)
+            catch (WiimoteException )
             {
                 WiiBoardServiceState = WiiBoardServiceState.Discover;
                 _foundDebice = false;
@@ -184,7 +187,7 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
             if (OffsetRange > 2.0f)
                 Offset = 0.0f;
 
-            OffsetChangedAction?.Invoke(Offset);
+            OffsetChanged?.Invoke(this, Offset);
 
             WiiBoardServiceState = WiiBoardServiceState.Ready;
         }

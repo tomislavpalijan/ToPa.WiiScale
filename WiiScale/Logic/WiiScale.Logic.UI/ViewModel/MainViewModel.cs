@@ -4,9 +4,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Practices.ServiceLocation;
 using WiiScale.Logic.UI.BaseClasses;
 using WiiScale.Logic.UI.Helper.Navigation;
 using WiiScale.Logic.UI.Model;
+using WiiScale.Logic.UI.Services.WiiBoard;
 
 namespace WiiScale.Logic.UI.ViewModel
 {
@@ -14,9 +16,12 @@ namespace WiiScale.Logic.UI.ViewModel
     {
         public SlideNavigator SlideNavigator { get; private set; }
         public ICommand ShowNewAccountCommand { get; private set; }
+        public IWiiBoardService WiiBoardService { get; set; }
 
         public MainViewModel()
         {
+
+
             Init();
 
             InitCommands();
@@ -29,6 +34,7 @@ namespace WiiScale.Logic.UI.ViewModel
             else
             {
                 WindowTitle = "Wii Scale";
+                WiiBoardService = ServiceLocator.Current.GetInstance<IWiiBoardService>();
             }
             
             SlideNavigator = new SlideNavigator(this, Accounts);
