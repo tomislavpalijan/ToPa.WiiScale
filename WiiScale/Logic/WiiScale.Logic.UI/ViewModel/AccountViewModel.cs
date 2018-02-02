@@ -27,6 +27,7 @@ namespace WiiScale.Logic.UI.ViewModel
         public AccountViewModel()
         {
             GoBackCommand = new RelayCommand(GoBackExecute);
+            MeasureCommand = new RelayCommand(OnMeasureExecute, OnCanMeasureExecute);
 
             ObserveProperty(nameof(CurrentWeight), 800);
             ObserveProperty(nameof(BatteryState), 800);
@@ -47,6 +48,16 @@ namespace WiiScale.Logic.UI.ViewModel
             Init();
         }
 
+        private bool OnCanMeasureExecute()
+        {
+            return WiiBoardState == WiiBoardServiceState.Ready;
+        }
+
+        private void OnMeasureExecute()
+        {
+            _wiiBoardService.StartMeasurement();
+        }
+
         private void InitializeWiiBoardService()
         {
 
@@ -58,11 +69,13 @@ namespace WiiScale.Logic.UI.ViewModel
             _wiiBoardService.WeightInKgChanged += OnWeightInKgChanged;
             _wiiBoardService.BatteryStateChanged += OnBatteryStateChanged;
             _wiiBoardService.WiiBoardServiceStateChanged += OnWiiBoardStateChanged;
+            _wiiBoardService.NewMeasureValueEvent += OnNewMeasurementChanged;
         }
 
         public Account CurrentAccount { get; set; }
         public SlideNavigator SlideNavigator { get; set; }
         public ICommand GoBackCommand { get; }
+        public ICommand MeasureCommand { get; private set; }
         public SeriesCollection WeightSeriesCollection { get; set; }
         public ChartValues<ObservableValue> WeightChartValues { get; set; }
         public LineSeries WeightLineSeries { get; set; }
@@ -153,6 +166,22 @@ namespace WiiScale.Logic.UI.ViewModel
             CurrentWeight = weight;
         }
 
+        private void OnNewMeasurementChanged(object sender, float measurement)
+        {
+            var wii = sender as IWiiBoardService;
+            if (wii == null)
+                return;
+
+            var weight = new Weight
+            {
+                IsManualAdded = false,
+                MeasureTime = DateTime.Now,
+                Value = measurement
+            };
+
+            CurrentAccount.WeightsCollection.Add(weight);
+        }
+
         private void GoBackExecute()
         {
             SlideNavigator.GoBack();
@@ -175,6 +204,7 @@ namespace WiiScale.Logic.UI.ViewModel
                 _wiiBoardService.BatteryStateChanged -= OnBatteryStateChanged;
                 _wiiBoardService.WeightInKgChanged -= OnWeightInKgChanged;
                 _wiiBoardService.WiiBoardServiceStateChanged -= OnWiiBoardStateChanged;
+                _wiiBoardService.NewMeasureValueEvent -= OnNewMeasurementChanged;
             }
 
             base.Dispose();

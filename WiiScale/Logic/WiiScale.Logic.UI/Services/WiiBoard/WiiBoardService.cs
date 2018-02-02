@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using WiimoteLib;
 using Timer = System.Timers.Timer;
 
@@ -15,13 +17,15 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
         Discover,
         Connect,
         Calibration,
-        Ready
+        Ready,
+        Measure
     }
 
     public class WiiBoardService : IWiiBoardService
     {
         private readonly object _lockObj = new object();
         private readonly List<float> _offsetRecord;
+        private readonly List<float> _measureRecord;
         private Timer _aliveTimer;
 
         private float _batteryState;
@@ -35,11 +39,13 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
         public event EventHandler<float> OffsetChanged;
         public event EventHandler<float> WeightInKgChanged;
         public event EventHandler<WiiBoardServiceState> WiiBoardServiceStateChanged;
+        public event EventHandler<float> NewMeasureValueEvent; 
 
         public WiiBoardService()
         {
             WiiBoardServiceState = WiiBoardServiceState.Unknown;
             _offsetRecord = new List<float>();
+            _measureRecord = new List<float>();
             _foundDebice = false;
             IsInitialized = false;
             WiimoteCollection = new WiimoteCollection();
@@ -120,6 +126,32 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
             });
         }
 
+        public void StartMeasurement()
+        {
+            if(WiiBoardServiceState != WiiBoardServiceState.Ready)
+                return;
+
+            WiiBoardServiceState = WiiBoardServiceState.Measure;
+
+            Task.Factory.StartNew((() =>
+            {
+                _measureRecord.Clear();
+                for (int i = 0; i < 10; i++)
+                {
+                    _measureRecord.Add(WeightInKg);
+                    Thread.Sleep(1000);
+                }
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    NewMeasureValueEvent?.Invoke(this, _measureRecord.Average());
+                    WiiBoardServiceState = WiiBoardServiceState.Ready;
+                } );
+                
+            }));
+            
+        }
+
         private void AliveTimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
         {
             if (_foundDebice)
@@ -182,7 +214,7 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
             OffsetMax = _offsetRecord.Max();
             OffsetMin = _offsetRecord.Min();
             OffsetRange = OffsetMax - OffsetMin;
-            Offset = _offsetRecord.Average();
+            Offset = _offsetRecord.Average() * -1;
 
             if (OffsetRange > 2.0f)
                 Offset = 0.0f;

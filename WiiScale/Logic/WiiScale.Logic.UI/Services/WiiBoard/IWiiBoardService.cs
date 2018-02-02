@@ -16,8 +16,10 @@ namespace WiiScale.Logic.UI.Services.WiiBoard
         event EventHandler<float> OffsetChanged;
         event EventHandler<float> WeightInKgChanged;
         event EventHandler<WiiBoardServiceState> WiiBoardServiceStateChanged;
+        event EventHandler<float> NewMeasureValueEvent; 
 
         void Init(float offset = 0);
         void StartCalibration();
+        void StartMeasurement();
     }
 }

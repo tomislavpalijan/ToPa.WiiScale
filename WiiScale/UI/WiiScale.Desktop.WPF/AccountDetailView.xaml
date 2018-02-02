@@ -28,6 +28,7 @@
                     Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DatePicker.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converter:BMItoColorConverter x:Key="BmItoColorConverter"/>
+            <converter:EnumToStringConverter x:Key="EnumToStringConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
@@ -160,7 +161,17 @@
                             </StackPanel>
                         </TextBlock.ToolTip>
                     </TextBlock>
-                    <TextBox FontSize="24" Grid.Row="6" Text="{Binding CurrentWeight, Mode=OneWay}" />
+                    <StackPanel Grid.Row="6">
+                        <Label Content="Scale" FontSize="30"/>
+                        <Label HorizontalContentAlignment="Center" Content="{Binding WiiBoardState, Converter={StaticResource EnumToStringConverter}}"/>
+                        <Label FontSize="20" HorizontalContentAlignment="Center" 
+                                 Content="{Binding BatteryState, Mode=OneWay }" ContentStringFormat="0.## Battery" />
+                        <Label FontSize="24" HorizontalContentAlignment="Center"
+                                 Content = "{Binding CurrentWeight, Mode=OneWay }" ContentStringFormat="0.## kg" />
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Content="MEASURE" Command="{Binding MeasureCommand}"
+                                HorizontalAlignment="Stretch" Margin="8" />
+                    </StackPanel>
                    
                 </Grid>
             </Grid>

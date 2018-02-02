@@ -85,6 +85,7 @@
     <Compile Include="BaseClasses\BaseModel.cs" />
     <Compile Include="BaseClasses\BaseViewModel.cs" />
     <Compile Include="Converter\BMItoColorConverter.cs" />
+    <Compile Include="Converter\EnumToStringConverter.cs" />
     <Compile Include="Helper\AccountCardDetailTemplateSelector.cs" />
     <Compile Include="Helper\FileSystem\AppDirectorySystemInfo.cs" />
     <Compile Include="Helper\FileSystem\AppSpecialFolder.cs" />
